@@ -4,41 +4,16 @@ package com.teamtreehouse.instateam.dao;
 import com.teamtreehouse.instateam.model.Project;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
+// This repository class extends the GenericDaoImpl class, and implements the ProjectDao interface.
 @Repository
-public class ProjectDaoImpl implements ProjectDao{
+public class ProjectDaoImpl extends GenericDaoImpl<Project>
+        implements ProjectDao{
 
-    @Autowired
-    private SessionFactory sessionFactory;
-
+    // The findById is overridden here because the Project entity has to initialize it's role and collaborator lists
+// to prevent data fetching errors/exceptions.
     @Override
-    public List<Project> findAll() {
-        Session session=sessionFactory.openSession();
-        //Get all categories with a Hibernate criteria
-        List<Project> projects=session.createCriteria(Project.class).list();
-        //Close the session
-        session.close();
-
-        return projects;
-    }
-
-    @Override
-    public void save(Project project) {
-        Session session=sessionFactory.openSession();
-        session.beginTransaction();
-        session.saveOrUpdate(project);
-        session.getTransaction().commit();
-        session.close();
-
-    }
-
-    @Override
-    public Project findById(Long projectId) {
+    public Project findById(Long projectId){
         Session session = sessionFactory.openSession();
         Project project = session.get(Project.class, projectId);
         Hibernate.initialize(project.getRolesNeeded());
@@ -47,8 +22,4 @@ public class ProjectDaoImpl implements ProjectDao{
         return project;
     }
 
-    @Override
-    public void delete(Project project) {
-
-    }
 }

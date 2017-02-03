@@ -2,39 +2,37 @@ package com.teamtreehouse.instateam.model;
 
 
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "collaborators")
 public class Collaborator {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
     private Long id;
 
-    @Column(name = "NAME", columnDefinition = "VARCHAR")
-    @Pattern(regexp = "\\s*[a-zA-Z0-9]+(\\s+[a-zA-Z0-9]+)*\\s*",
-            message = "Name must consist of alphanumeric characters: a-Z, 0-9")
+    @NotNull
+    @Size(min = 3, max = 20)
     private String name;
 
-    // relation to role class, Many Collaborators can have one Role
-    // role removal detaches collaborators. Collaborators will get NULL
-    // in their role_id primary key, see `RoleDaoImpl.delete` method for more
-    @ManyToOne(cascade = CascadeType.DETACH)
+    @ManyToOne
     private Role role;
 
-
+    @ManyToMany(targetEntity = Project.class)
+    @JoinTable(name = "project_collaborator", joinColumns = {@JoinColumn(name = "collaboratorsassigned_id")},
+            inverseJoinColumns = {@JoinColumn(name = "project_id")})
+    private List<Project> projects = new ArrayList<>();
 
     public Collaborator(){
 
     }
 
-    //getters and setters
-
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -42,6 +40,7 @@ public class Collaborator {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -49,6 +48,7 @@ public class Collaborator {
     public Role getRole() {
         return role;
     }
+
     public void setRole(Role role) {
         this.role = role;
     }
@@ -66,6 +66,5 @@ public class Collaborator {
         return role != null ? role.equals(that.role) : that.role == null;
 
     }
-
 
 }

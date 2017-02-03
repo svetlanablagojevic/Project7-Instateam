@@ -408,7 +408,19 @@ form .add-new-collaborator .button {
 }
 
 
-
+///////////
+.flash.success {
+    padding: 15px;
+    background-color: darkseagreen;
+    color: aliceblue;
+    text-align: center;
+}
+.flash.failure {
+    padding: 15px;
+    background-color: brown;
+    color: aliceblue;
+    text-align: center;
+}
 
 
 

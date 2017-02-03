@@ -1,51 +1,26 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
-    <title>InstaTeam</title>
-    <link href='https://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'/>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-    <link rel="stylesheet" href="css/normalize.css"/>
-    <link rel="stylesheet" href="css/site.css"/>
-</head>
+<head th:replace="layout :: head"></head>
 <body>
-<header>
-    <div class="container">
-        <div class="site-header">
-            <a class="logo" href="index.html">InstaTeam</a>
-            <a class="new-project button icon-left" th:href="@{/projects/add-new}"><i class="material-icons">add</i> New Project</a>
-        </div>
-    </div>
-</header>
-<nav>
-    <ul>
-        <li><a th:href="@{/}">Projects</a></li>
-        <li><a th:href="@{/collaborators}">Collaborators</a></li>
-        <li class="selected"><a th:href="@{/roles}">Roles</a></li>
-    </ul>
-</nav>
+<header th:replace="layout :: header"></header>
+<nav th:replace="layout :: nav"></nav>
 <section>
     <div class="container wrapper">
-
-
-            <form th:action="@{/add-role}" th:object="${role}" method="post">
+        <form th:action="@{/add-role}" method="post" th:object="${role}" id="addRoleForm">
+            <div>
                 <h2>Manage Roles</h2>
-                <div th:each="role : ${roles}" >
-                    <ul class="checkbox-list">
-                        <li th:if="${role.id != 0}">
-                            <span class="primary" th:text="${role.name}">Role Name</span>
-                            <span><a class="button" th:href="@{|/role/${role.id}|}">Edit</a></span>
-                        </li>
-                    </ul>
-                </div>
-
-            <div class="actions add-new-role">
-                <input type="text" placeholder="New Role..." th:field="*{name}"/>
-                <input type="submit" value="Add" style="width: 60px" class="button"/>
+                <ul class="checkbox-list">
+                    <!--<li th:each="role : ${roles}"><span class="primary" th:text="${role.name}"></span></li>-->
+                    <li th:each="role : ${roles}"><a th:href="@{|/roles/${role.id}/detail|}" class="primary" th:text="${role.name}"></a></li>
+                </ul>
             </div>
-            </form>
+            <div class="actions add-new-role">
+                <input th:field="*{name}" type="text" placeholder="New Role..." />
+                <a href="#" onclick="document.getElementById('addRoleForm').submit()" class="button">Add</a>
+            </div>
+        </form>
     </div>
 </section>
+<div th:replace="layout :: flash"></div>
 </body>
 </html>

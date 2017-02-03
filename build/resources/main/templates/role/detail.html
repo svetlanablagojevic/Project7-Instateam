@@ -12,14 +12,18 @@
                 <h2 th:text="*{name}"></h2>
                 <div class="actions add-new-role">
                     <input th:field="*{name}" type="text" placeholder="Edit Role..." />
-                    <a href="#" onclick="document.getElementById('editRoleForm').submit()" class="button">Edit</a>
+                    <a href="#" onclick="document.getElementById('editRoleForm').submit()" class="button">Save</a>
                 </div>
             </div>
         </form>
 
-        <form th:action="@{|/roles/${role.id}/delete|}" method="post" th:object="${role}">
+
+
+        <form th:action="@{|/roles/${role.id}/delete|}" method="post" th:object="${role}" onclick="return confirm('Deleting Role will delete all collaborators associated. Do you want to proceed?')">
             <input type="submit" value="Delete" class="button" id="role-delete-button"/>
         </form>
+
+
     </div>
 </section>
 <div th:replace="layout :: flash"></div>

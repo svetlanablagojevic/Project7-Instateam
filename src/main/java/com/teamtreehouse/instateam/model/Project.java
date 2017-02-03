@@ -2,42 +2,35 @@ package com.teamtreehouse.instateam.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Table(name = "projects")
 @Entity
 public class Project {
     @Id
-    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // project name: alphanumeric VARCHAR
-    @Column(name = "NAME", columnDefinition = "VARCHAR")
     @NotNull
-    @Pattern(regexp = "\\s*[a-zA-Z0-9]+(\\s+[a-zA-Z0-9]+)*\\s*",
-            message = "Name must consist of alphanumeric characters: a-Z, 0-9")
+    @Size(min = 3, max = 50)
     private String name;
 
-    // project description: for now it simply cannot be empty or null
-    // can be changed later
-    @Column(name = "DESCRIPTION", columnDefinition = "VARCHAR")
-    @NotNull(message = "Description cannot be empty")
+    @NotNull
+    @Size(min = 3, max = 255)
     private String description;
 
-    @Enumerated
-    private ProjectStatus status;
+    private String status;
 
-    @Column
     private Date dateCreated;
 
     @ManyToMany
     private List<Role> rolesNeeded = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = Collaborator.class)
+    @JoinTable(name = "project_collaborator", joinColumns = {@JoinColumn(name = "project_id")},
+            inverseJoinColumns = {@JoinColumn(name = "collaboratorsassigned_id")})
     private List<Collaborator> collaboratorsAssigned = new ArrayList<>();
 
     public Project(){
@@ -68,10 +61,11 @@ public class Project {
         this.description = description;
     }
 
-    public ProjectStatus getStatus() {
+    public String getStatus() {
         return status;
     }
-    public void setStatus(ProjectStatus status) {
+
+    public void setStatus(String status) {
         this.status = status;
     }
 

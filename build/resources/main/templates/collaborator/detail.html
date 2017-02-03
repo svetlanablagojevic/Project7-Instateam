@@ -16,17 +16,18 @@
                     <div class="custom-select">
                         <span class="dropdown-arrow"></span>
                         <select th:field="*{role.id}" id="collaborator-role-dropdown">
+                            <option value="0">[Unassigned]</option>
                             <option th:text="${collaborator.role.name}" th:value="${collaborator.role.id}"></option>
                             <option th:if="${!role.name.equals(collaborator.role.name)}" th:value="${role.id}" th:each="role : ${roles}"
                                     th:text="${role.name}"></option>
                         </select>
                     </div>
-                    <a href="#" onclick="document.getElementById('editCollaboratorForm').submit()" class="button">Edit</a>
+                    <a href="#" onclick="document.getElementById('editCollaboratorForm').submit()" class="button">Save</a>
                 </div>
             </div>
         </form>
 
-        <form th:action="@{|/collaborators/${collaborator.id}/delete|}" method="post" th:object="${collaborator}">
+        <form th:action="@{|/collaborators/${collaborator.id}/delete|}" method="post" th:object="${collaborator}" onclick="return confirm('Are you sure you want to detete this collaboratot?')">
             <input type="submit" value="Delete" class="button" id="collaborator-delete-button"/>
         </form>
 
