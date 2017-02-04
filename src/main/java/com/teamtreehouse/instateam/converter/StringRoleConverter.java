@@ -25,7 +25,8 @@ public class StringRoleConverter implements Converter<String, Role>{
     // to retrieve that specific object from the database.
     @Override
     public Role convert(String source) {
-        return roleDao.findById(new Long(source));
+        Role role = roleDao.findById(new Long(source));
+        return role != null ? role : null;
     }
 
     // This Bean method autowires a ConversionService object. The conversion operation would not be possible without this Java bean.

@@ -14,10 +14,10 @@
                     <input th:field="*{name}" type="text" placeholder="Edit Collaborator..." />
                     <div class="custom-select">
                         <span class="dropdown-arrow"></span>
-                        <select th:field="*{role}" id="collaborator-role-dropdown">
+                        <select th:field="*{role.id}" id="collaborator-role-dropdown">
                             <option value="0">[Unassigned]</option>
                             <option th:text="${collaborator.role.name}" th:value="${collaborator.role.id}"></option>
-                            <option th:if="${!role.name.equals(collaborator.role.name)}" th:value="$*{role.id}" th:each="role : ${roles}"
+                            <option th:if="${!role.name.equals(collaborator.role.name)}" th:value="${role.id}" th:each="role : ${roles}"
                                     th:text="${role.name}"></option>
                         </select>
                     </div>
