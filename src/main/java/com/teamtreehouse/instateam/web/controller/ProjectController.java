@@ -92,8 +92,6 @@ public class ProjectController {
             roles.add(roleService.findById(role.getId()));
         }
 
-
-
         project.setCollaboratorsAssigned(project.getCollaboratorsAssigned());
 
         model.addAttribute("roles", roles);

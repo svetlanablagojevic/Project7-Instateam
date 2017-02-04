@@ -19,9 +19,8 @@
                     <span th:text="${role.name}" class="primary"></span>
                     <span class="secondary" th:if="${collaborators.size() == 0}">[Unassigned]</span>
                     <div th:if="${collaborators.size() > 0}">
-                                <span th:if="${collaborators[__${roleStat.index}__] != null}"
-                                      th:text="${collaborators[__${roleStat.index}__].name}" class="secondary"></span>
-                        <span th:if="${collaborators[__${roleStat.index}__] == null}" class="secondary">[Unassigned]</span>
+                        <span th:if="${collaboratorsAssigned != null}" th:text="${collaboratorsAssigned.name}" class="secondary"></span>
+                        <span th:if="${collaboratorsAssigned == null}" class="secondary">[Unassigned]</span>
                     </div>
                 </div>
             </div>

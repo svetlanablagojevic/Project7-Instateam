@@ -13,7 +13,7 @@
                 <li th:each="role : ${roles}"><span class="primary" th:text="${role.name}"></span>
                     <div class="custom-select">
                         <span class="dropdown-arrow"></span>
-                        <select th:field="*{collaboratorsAssigned[__${roleStat.index}__].id}">
+                        <select th:field="*{collaboratorsAssigned}">
                             <option value="0">[Unassigned]</option>
                             <option th:each="collaborator : ${role.collaborators}" th:value="${collaborator.id}"
                                     th:text="${collaborator.name}"></option>
