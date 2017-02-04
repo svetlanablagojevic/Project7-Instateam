@@ -28,7 +28,7 @@
                 <form th:action="@{|/projects/${project.id}/delete|}" method="post" th:object="${project}">
                     <a class="button" th:href="@{|/projects/${project.id}/edit|}">Edit Project</a>
                     <a class="button" th:href="@{|/projects/${project.id}/collaborators|}">Edit Collaborators</a>
-                    <input type="submit" class="button" value="Delete"/>
+                    <input type="submit" class="button" value="Delete" onclick="return confirm('Are you sure you want to delete selected project?')"/>
                 </form>
             </div>
         </div>

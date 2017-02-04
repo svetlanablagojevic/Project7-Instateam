@@ -20,11 +20,11 @@ public class StringCollaboratorConverter implements Converter<String, Collaborat
     @Autowired
     private CollaboratorDao collaboratorDao;
 
-    // This method takes the collaborator identifier as a string, converts it to a Long variable, and it uses it
-    // to retrieve that specific object from the database.
+ 
     @Override
     public Collaborator convert(String source) {
-        return collaboratorDao.findById(new Long(source));
+        Collaborator collaborator = collaboratorDao.findById(new Long(source));
+        return collaborator != null ? collaborator : null;
     }
 
     // This Bean method autowires a ConversionService object. The conversion operation would not be possible without this Java bean.
@@ -36,5 +36,9 @@ public class StringCollaboratorConverter implements Converter<String, Collaborat
         conversionServiceFactoryBean.setConverters(converters);
         return conversionServiceFactoryBean.getObject();
     }
+
+    // This method takes the collaborator identifier as a string, converts it to a Long variable, and it uses it
+    // to retrieve that specific object from the database.
+
 }
 

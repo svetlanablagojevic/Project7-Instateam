@@ -34,7 +34,7 @@ public class RoleController {
         return "role/index";
     }
 
-
+    //add role
     @RequestMapping(value = "/add-role", method = RequestMethod.POST)
     public String addRole(@Valid Role role, BindingResult result, RedirectAttributes redirectAttributes){
         if(result.hasErrors()){
@@ -50,7 +50,7 @@ public class RoleController {
         return "redirect:/roles";
     }
 
-
+    //detail role page
     @RequestMapping(value = "/roles/{roleId}/detail")
     public String roleDetail(@PathVariable Long roleId, Model model){
         Role role = roleService.findById(roleId);
@@ -75,16 +75,14 @@ public class RoleController {
         redirectAttributes.addFlashAttribute("flash", new FlashMessage(String.format("Role '%s' has been renamed to '%s'.", oldName, newName) ,
                 FlashMessage.Status.SUCCESS));
 
-
         return "redirect:/roles";
     }
 
-
+    //delete role
     @RequestMapping(value = "/roles/{roleId}/delete", method = RequestMethod.POST)
     public String deleteRole(@PathVariable Long roleId, RedirectAttributes redirectAttributes){
         Role role = roleService.findById(roleId);
-        redirectAttributes.addFlashAttribute("flash", new FlashMessage(String.format("Role '%s' has been deleted successfuly.",
-                role.getName()),
+        redirectAttributes.addFlashAttribute("flash", new FlashMessage(String.format("Role '%s' has been deleted successfuly.", role.getName()),
                 FlashMessage.Status.SUCCESS));
         roleService.delete(role);
         return "redirect:/roles";
