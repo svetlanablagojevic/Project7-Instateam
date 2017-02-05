@@ -25,7 +25,8 @@ public class StringCollaboratorConverter implements Converter<String, Collaborat
     @Override
     public Collaborator convert(String source) {
 
-        return collaboratorDao.findById(new Long(source));
+        Collaborator collaborator = collaboratorDao.findById(new Long(source));
+        return collaborator != null ? collaborator : null;
     }
 
     // This Bean method autowires a ConversionService object. The conversion operation would not be possible without this Java bean.
